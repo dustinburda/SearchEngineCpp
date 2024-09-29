@@ -108,6 +108,5 @@ int main() {
 
     std::string extension2 { "words2.txt" };
     Document d2 { extension2 };
-
     return 0;
 }
