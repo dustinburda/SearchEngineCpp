@@ -6,4 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(SearchEngine main.cpp)
+add_executable(SearchEngine main.cpp
+        Document.cpp
+        Lexer.cpp
+        Index.cpp)
