@@ -14,23 +14,31 @@ class Index {
 public:
     Index() = delete;
     Index(const Document& d) {
-
+        AddDocument(d);
     }
 
-    Index(const Collection& d) {
-
+    Index(const Collection& collection) {
+        for(auto& document : collection) {
+            AddDocument(document);
+        }
     }
 
     void AddDocument(const Document& d) {
         for(auto& token : d.Tokens()) {
-
+            index_[token].AddPosting(d.Id());
         }
     }
 
 private:
     struct TermInfo {
-        uint16_t doc_freq_;
-        std::list<uint16_t> postings_list_;
+
+        void AddPosting(DocId id) {
+            postings_list_.push_back(id);
+            term_freq_++;
+        }
+
+        uint16_t term_freq_;
+        std::list<DocId> postings_list_;
     };
 
     // Sorts automatically by key
