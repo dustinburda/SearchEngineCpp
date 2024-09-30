@@ -22,29 +22,8 @@ class Document {
 public:
     Document() = delete;
 
-    explicit Document(const std::filesystem::path& path) : id_ { g_docId++ }, tokens_ {} {
-        std::ifstream document { path };
-        assert(document.is_open() );
-
-        std::stringstream s;
-        buffer_ << document.rdbuf();
-    }
-
-    explicit Document(const std::string& extension) : id_ { g_docId++ }, tokens_{} {
-        auto current_path = std::filesystem::current_path().parent_path();
-        std::filesystem::path document_path = current_path.concat("/" + extension);
-
-        std::ifstream document { document_path };
-        assert(document.is_open() );
-
-        buffer_ << document.rdbuf();
-
-        Lexer l { buffer_.str() };
-        l.Lex(tokens_);
-    }
-
-    Document(const Document&& d) : id_{d.id_}, tokens_ {std::move(d.tokens_)}, buffer_(std::move(d.buffer_.str())) {}
-
+    explicit Document(const std::filesystem::path& path);
+    explicit Document(const std::string& extension);
 
     const std::vector<Token>& Tokens() const { return tokens_; }
     DocId Id() const { return id_; }

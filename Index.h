@@ -14,40 +14,12 @@
 class Index {
 public:
     Index() = delete;
-    Index(const Document& d) {
-        AddDocument(d);
-    }
 
-    Index(const Collection& collection) {
-        for(auto& document : collection) {
-            AddDocument(*document);
-        }
-    }
+    Index(const Document& d);
+    Index(const Collection& collection);
 
-    void AddDocument(const Document& d) {
-        std::unordered_set<Token> seen_tokens;
-        for(auto& token : d.Tokens()) {
-            if (seen_tokens.count(token) > 0)
-                continue;
-
-            seen_tokens.insert(token);
-            auto& term_info = index_[token];
-            term_info.AddPosting(d.Id());
-        }
-    }
-
-    friend std::ostream& operator<<(std::ostream& stream, const Index& index) {
-        for( auto& [token,term_info] : index.index_) {
-            stream << "Token: " << token << "  " << "  Document Frequency: " << term_info.doc_freq_;
-            stream << "  Postings List:";
-            for(DocId id : term_info.postings_list_) {
-                stream << " " <<  id;
-            }
-            stream << "\n";
-        }
-
-        return stream;
-    }
+    void AddDocument(const Document& d);
+    friend std::ostream& operator<<(std::ostream& stream, const Index& index);
 
 private:
     struct TermInfo {
