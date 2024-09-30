@@ -10,6 +10,6 @@
 using DocId = uint16_t;
 
 
-static DocId g_docId = 0;
+static DocId g_docId = 1;
 
 #endif //SEARCHENGINE_GLOBALS_H

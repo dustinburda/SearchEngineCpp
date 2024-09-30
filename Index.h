@@ -7,6 +7,7 @@
 
 #include <list>
 #include <map>
+#include <unordered_set>
 
 #include "Document.h"
 
@@ -19,14 +20,33 @@ public:
 
     Index(const Collection& collection) {
         for(auto& document : collection) {
-            AddDocument(document);
+            AddDocument(*document);
         }
     }
 
     void AddDocument(const Document& d) {
+        std::unordered_set<Token> seen_tokens;
         for(auto& token : d.Tokens()) {
-            index_[token].AddPosting(d.Id());
+            if (seen_tokens.count(token) > 0)
+                continue;
+
+            seen_tokens.insert(token);
+            auto& term_info = index_[token];
+            term_info.AddPosting(d.Id());
         }
+    }
+
+    friend std::ostream& operator<<(std::ostream& stream, const Index& index) {
+        for( auto& [token,term_info] : index.index_) {
+            stream << "Token: " << token << "  " << "  Document Frequency: " << term_info.doc_freq_;
+            stream << "  Postings List:";
+            for(DocId id : term_info.postings_list_) {
+                stream << " " <<  id;
+            }
+            stream << "\n";
+        }
+
+        return stream;
     }
 
 private:
@@ -34,10 +54,10 @@ private:
 
         void AddPosting(DocId id) {
             postings_list_.push_back(id);
-            term_freq_++;
+            doc_freq_++;
         }
 
-        uint16_t term_freq_;
+        uint16_t doc_freq_;
         std::list<DocId> postings_list_;
     };
 

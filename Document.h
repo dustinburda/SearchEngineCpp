@@ -43,6 +43,9 @@ public:
         l.Lex(tokens_);
     }
 
+    Document(const Document&& d) : id_{d.id_}, tokens_ {std::move(d.tokens_)}, buffer_(std::move(d.buffer_.str())) {}
+
+
     const std::vector<Token>& Tokens() const { return tokens_; }
     DocId Id() const { return id_; }
 
@@ -52,6 +55,6 @@ private:
     std::stringstream buffer_;
 };
 
-using Collection = std::vector<Document>;
+using Collection = std::vector<std::unique_ptr<Document>>;
 
 #endif //SEARCHENGINE_DOCUMENT_H

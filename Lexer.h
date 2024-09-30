@@ -5,6 +5,7 @@
 #ifndef SEARCHENGINE_LEXER_H
 #define SEARCHENGINE_LEXER_H
 
+#include <algorithm>
 #include <string>
 #include <vector>
 #include <sstream>
@@ -20,6 +21,9 @@ public:
     // create a real lexer later
     void Lex(std::vector<Token>& tokens);
 private:
+
+    static std::string ToLowerCase(std::string token);
+
     std::stringstream src_;
 };
 
