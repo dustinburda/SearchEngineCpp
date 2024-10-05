@@ -10,4 +10,4 @@ add_executable(SearchEngine main.cpp
         Document.cpp
         Lexer.cpp
         Index.cpp
-        QueryLangParser.cpp)
+        QueryLangLexer.cpp)

@@ -16,10 +16,10 @@
 
 
 
-class QueryLangParser {
+class QueryLangLexer {
 public:
-    QueryLangParser() = delete;
-    explicit QueryLangParser(std::string src) : src_{std::move(src)}, index_ {0}, tokens_{} {
+    QueryLangLexer() = delete;
+    explicit QueryLangLexer(std::string src) : src_{std::move(src)}, index_ {0}, tokens_{} {
         ScanTokens();
     }
 
@@ -32,6 +32,7 @@ private:
     std::optional<char> Peek();
     std::optional<char> PeekAhead(size_t n);
     std::optional<char> Advance();
+    void AdvanceWhitespace();
 
     std::string src_;
     size_t index_;

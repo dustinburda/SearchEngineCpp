@@ -8,6 +8,7 @@
 
 #include "Document.h"
 #include "Index.h"
+#include "QueryLangLexer.h"
 
 
 int main() {
@@ -22,6 +23,8 @@ int main() {
     c.push_back(std::move(d2_ptr));
 
     Index i(c);
+
+    auto tokens = QueryLangLexer("(bye OR no) AND hello)").Tokens();
 
     std::cout << i << std::endl;
     return 0;
