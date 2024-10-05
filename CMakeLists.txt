@@ -9,4 +9,5 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(SearchEngine main.cpp
         Document.cpp
         Lexer.cpp
-        Index.cpp)
+        Index.cpp
+        QueryLangParser.cpp)

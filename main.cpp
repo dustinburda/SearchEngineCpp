@@ -17,7 +17,7 @@ int main() {
     std::string extension2 { "words2.txt" };
     auto d2_ptr = std::make_unique<Document>(extension2 );
 
-    Collection c; // = { std::move(d1_ptr), std::move(d2_ptr) };
+    Collection c;
     c.push_back(std::move(d1_ptr));
     c.push_back(std::move(d2_ptr));
 
